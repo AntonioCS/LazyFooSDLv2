@@ -2,6 +2,8 @@
 //#include "LTexture.h"
 #include <string.h> //MAX_PATH, strcat, memset
 
+static void destroy_window(void);
+
 bool init() {
     //Initialization flag
     bool success = true;
@@ -100,10 +102,10 @@ bool loadMediaTexture(char *path) {
 
 SDL_Texture *loadTexture(char *path) {
     //The final texture
-    SDL_Texture* newTexture = NULL;
+    SDL_Texture *newTexture = NULL;
 
     //Load image at specified path
-    SDL_Surface* loadedSurface = IMG_Load(path);
+    SDL_Surface *loadedSurface = IMG_Load(path);
     if (loadedSurface == NULL) {
         printf("Unable to load image %s! SDL_image Error: %s\n", path, IMG_GetError());
     }
@@ -136,7 +138,7 @@ void close() {
     SDL_Quit();
 }
 
-static void destroy_window() {
+void destroy_window() {
     //Destroy window
     SDL_DestroyRenderer(gRenderer);
     SDL_DestroyWindow(gWindow);
@@ -183,7 +185,7 @@ bool loadmediaFont(ltstruct *textTure, char *font, char *text, SDL_Color *textCo
 
     return success;
 }
-*/
+ */
 
 bool loadLazyFont() {
     bool success = true;
@@ -196,3 +198,4 @@ bool loadLazyFont() {
 
     return success;
 }
+
