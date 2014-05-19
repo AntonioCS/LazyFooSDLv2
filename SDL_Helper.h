@@ -74,15 +74,11 @@ void closeAlsoImgAndTtf();
 
 bool loadMediaTexture(char *);
 SDL_Texture *loadTexture(char *);
+SDL_Surface* loadOptimizedSurface(char *);
 
 //bool loadmediaFont(ltstruct *,char *,char *,SDL_Color *);
 
 bool loadLazyFont();
-
-//void write_text(char *);
-
-
-//char *resources_path(char *);
 
 void lesson01();
 void lesson02();
