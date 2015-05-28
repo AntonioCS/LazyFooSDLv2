@@ -26,8 +26,7 @@ int main(int argc, char** argv) {
     gWindow = init(&gScreenSurface);
 
     if (gWindow) {
-        printf("Tenho janela\n");
-        gHelloWorld = loadMedia("imagens/hello_word.bmp");
+        gHelloWorld = loadMedia("images/hello_world.bmp");
 
         if (gHelloWorld) {
             //Apply the image
