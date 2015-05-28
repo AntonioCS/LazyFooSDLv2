@@ -8,11 +8,11 @@
 #include <SDL.h>
 #include <stdio.h>
 #include <stdlib.h>
-///#include "common/init.h"
+#include "common/init.h"
 
 //Screen dimension constants
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
+//const int SCREEN_WIDTH = 640;
+//const int SCREEN_HEIGHT = 480;
 
 int main(int argc, char* args[]) {
     //The window we'll be rendering to
@@ -20,21 +20,26 @@ int main(int argc, char* args[]) {
 
     //The surface contained by the window
     SDL_Surface *screenSurface = NULL;
-/*
-    window = init(screenSurface);
-
+    ///*
+    window = init(&screenSurface);
+    printf("window pointer values: %p\n", window);
     if (window) {
+        printf("lesson init: screen pointer values: %p\n", screenSurface);
         //Fill the surface white
-        SDL_FillRect(screenSurface, NULL, SDL_MapRGB(screenSurface->format, 0xFF, 0xFF, 0xFF));
+        //SDL_FillRect(screenSurface, NULL, SDL_MapRGB(screenSurface->format, 0xFF, 0xFF, 0xFF));
+        SDL_FillRect(screenSurface, NULL, SDL_MapRGB(screenSurface->format, 238, 118, 33));
 
         //Update the surface
         SDL_UpdateWindowSurface(window);
 
         //Wait two seconds
         SDL_Delay(2000);
+    } else {
+        printf("Falha ao criar window\n");
+        printf("SDL_Init failed: %s\n", SDL_GetError());
     }
-*/
-    ///*
+    //*/
+    /*
         //Initialize SDL
         if (SDL_Init(SDL_INIT_VIDEO) < 0) {
             printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
