@@ -40,9 +40,6 @@ int main(int argc, char** argv) {
             //Event handler
             SDL_Event e;
 
-            //Apply the image
-            SDL_BlitSurface(gImage, NULL, gScreenSurface, NULL);
-
             //While application is running
             while (!quit) {
                 //Handle events on queue
@@ -52,10 +49,13 @@ int main(int argc, char** argv) {
                         quit = true;
                     }
                 }
-                
+                //Apply the image
+                SDL_BlitSurface(gImage, NULL, gScreenSurface, NULL);
+
 
                 //Update the surface
                 SDL_UpdateWindowSurface(gWindow);
+                SDL_Delay(250); //improves a bit the cpu usage
             }
         }
     }
