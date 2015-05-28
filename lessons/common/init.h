@@ -16,7 +16,7 @@
 extern "C" {
 #endif
     
-SDL_Window *init(SDL_Surface *);
+SDL_Window *init(SDL_Surface **);
 
 #ifdef	__cplusplus
 }
