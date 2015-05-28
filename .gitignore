@@ -1,5 +1,4 @@
 /nbproject
-/.dep.inc
-/OriginalLessons
-/dist
-/build
+Original/
+*.dll
+bin/*.exe
