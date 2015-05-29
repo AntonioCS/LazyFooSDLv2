@@ -15,7 +15,7 @@
 
 #define IMAGE_PATH_SIZE 25
 
-//void load_all_images(SDL_Surface *[]);
+static bool load_all_images(SDL_Surface *, char *, int);
 
 int main(int argc, char** argv) {
     //The window we'll be rendering to
@@ -39,9 +39,9 @@ int main(int argc, char** argv) {
     };
 
     //The images that correspond to a keypress
-    SDL_Surface *gKeyPressSurfaces[KEY_PRESS_SURFACE_TOTAL];
+    SDL_Surface * gKeyPressSurfaces[KEY_PRESS_SURFACE_TOTAL];
 
-    char key_images[KEY_PRESS_SURFACE_TOTAL][IMAGE_PATH_SIZE] = {
+    char *key_images[KEY_PRESS_SURFACE_TOTAL] = {
         "images/press.bmp",
         "images/up.bmp",
         "images/down.bmp",
@@ -53,6 +53,14 @@ int main(int argc, char** argv) {
     gWindow = init(&gScreenSurface);
 
     if (gWindow) {
+        if (load_all_images()) {
+
+        }
+        else {
+            printf("Unable to load image at position %d: %s", i, SDL_GetError());
+            exit(EXIT_FAILURE);
+        }
+
         /*
         for (int i = 0; i < KEY_PRESS_SURFACE_TOTAL; i++) {
             gKeyPressSurfaces[i] = loadMedia(key_images[i]);
@@ -70,3 +78,16 @@ int main(int argc, char** argv) {
     return (EXIT_SUCCESS);
 }
 
+static bool load_all_images(SDL_Surface *sdl_image_list, char *images_path, int total) {
+    for (int i = 0; i < total; i++) {
+        image_list[i] = loadMedia(key_images[i]);
+
+        if (image_list[i] == NULL) {
+            return false;
+            //printf("Unable to load image at position %d: %s", i, SDL_GetError());
+            //exit(EXIT_FAILURE);
+        }
+    }
+
+    return true;
+}
