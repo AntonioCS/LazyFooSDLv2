@@ -18,11 +18,18 @@ COMMON=lessons/common/init.c lessons/common/loadmedia.c lessons/common/close.c
 #NOTE!!!!! - The order is important. The .c files must come before the linker flags
 #http://stackoverflow.com/questions/11893996/why-does-the-order-of-l-option-in-gcc-matter
 
+#Hello SDL
 lesson01: lessons/lesson01.c lessons/common/init.c
 	$(CC) $+ $(CFLAGS) $(SDL_OPTIONS) -o bin/$@
 
+#Getting an image on the screen
 lesson02: lessons/lesson02.c $(COMMON)
 	$(CC) $+ $(CFLAGS) $(SDL_OPTIONS) -o bin/$@
 
+#Event driven programming
 lesson03: lessons/lesson03.c $(COMMON)
+	$(CC) $+ $(CFLAGS) $(SDL_OPTIONS) -o bin/$@
+
+#Key presses
+lesson04: lessons/lesson04.c $(COMMON)
 	$(CC) $+ $(CFLAGS) $(SDL_OPTIONS) -o bin/$@
