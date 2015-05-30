@@ -15,7 +15,7 @@
 
 #define IMAGE_PATH_SIZE 25
 
-static bool load_all_images(SDL_Surface *, char *, int);
+static bool load_all_images(SDL_Surface **, char **, int);
 
 int main(int argc, char** argv) {
     //The window we'll be rendering to
@@ -25,7 +25,10 @@ int main(int argc, char** argv) {
     SDL_Surface *gScreenSurface = NULL;
 
     //The image we will load and show on the screen
-    SDL_Surface *gImage = NULL;
+    //SDL_Surface *gImage = NULL;
+
+    //Current displayed image
+    SDL_Surface *gCurrentSurface = NULL;
 
     //Key press surfaces constants
 
@@ -42,50 +45,89 @@ int main(int argc, char** argv) {
     SDL_Surface * gKeyPressSurfaces[KEY_PRESS_SURFACE_TOTAL];
 
     char *key_images[KEY_PRESS_SURFACE_TOTAL] = {
-        "images/press.bmp",
-        "images/up.bmp",
-        "images/down.bmp",
-        "images/left.bmp",
-        "images/right.bmp"
+        "images/lesson04/press.bmp",
+        "images/lesson04/up.bmp",
+        "images/lesson04/down.bmp",
+        "images/lesson04/left.bmp",
+        "images/lesson04/right.bmp"
     };
 
 
     gWindow = init(&gScreenSurface);
 
     if (gWindow) {
-        if (load_all_images()) {
+        if (load_all_images(gKeyPressSurfaces, key_images, KEY_PRESS_SURFACE_TOTAL)) {
+            //Main loop flag
+            bool quit = false;
 
-        }
-        else {
-            printf("Unable to load image at position %d: %s", i, SDL_GetError());
+            //Event handler
+            SDL_Event e;
+
+            //Set default current surface
+            gCurrentSurface = gKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT];
+
+            //While application is running
+            while (!quit) {
+                //Handle events on queue
+                while (SDL_PollEvent(&e) != 0) {
+                    //User requests quit
+                    if (e.type == SDL_QUIT) {
+                        quit = true;
+                    }//User presses a key
+                    else if (e.type == SDL_KEYDOWN) {
+                        //Select surfaces based on key press
+                        switch (e.key.keysym.sym) {
+                            case SDLK_UP:
+                            case SDLK_w:
+                                gCurrentSurface = gKeyPressSurfaces[ KEY_PRESS_SURFACE_UP ];
+                                break;
+
+                            case SDLK_DOWN:
+                            case SDLK_s:
+                                gCurrentSurface = gKeyPressSurfaces[ KEY_PRESS_SURFACE_DOWN ];
+                                break;
+
+                            case SDLK_LEFT:
+                            case SDLK_a:
+                                gCurrentSurface = gKeyPressSurfaces[ KEY_PRESS_SURFACE_LEFT ];
+                                break;
+
+                            case SDLK_RIGHT:
+                            case SDLK_d:
+                                gCurrentSurface = gKeyPressSurfaces[ KEY_PRESS_SURFACE_RIGHT ];
+                                break;
+
+                            default:
+                                gCurrentSurface = gKeyPressSurfaces[ KEY_PRESS_SURFACE_DEFAULT ];
+                                break;
+                        }
+                    }
+                }
+
+                //Apply the current image
+                SDL_BlitSurface(gCurrentSurface, NULL, gScreenSurface, NULL);
+
+                //Update the surface
+                SDL_UpdateWindowSurface(gWindow);
+            }
+        } else {
+            printf("Unable to load image %s", SDL_GetError());
             exit(EXIT_FAILURE);
         }
-
-        /*
-        for (int i = 0; i < KEY_PRESS_SURFACE_TOTAL; i++) {
-            gKeyPressSurfaces[i] = loadMedia(key_images[i]);
-
-            if (gKeyPressSurfaces[i] == NULL) {
-                printf("Unable to load image at position %d: %s", i, SDL_GetError());
-                exit(EXIT_FAILURE);
-            }
-        }*/
     }
 
     //Free resources and close SDL
-    close(&gImage, &gWindow);
+    close(&gCurrentSurface, &gWindow);
 
     return (EXIT_SUCCESS);
 }
 
-static bool load_all_images(SDL_Surface *sdl_image_list, char *images_path, int total) {
+bool load_all_images(SDL_Surface **sdl_image_list, char **images_path, int total) {
     for (int i = 0; i < total; i++) {
-        image_list[i] = loadMedia(key_images[i]);
+        sdl_image_list[i] = loadMedia(images_path[i]);
 
-        if (image_list[i] == NULL) {
+        if (sdl_image_list[i] == NULL) {
             return false;
-            //printf("Unable to load image at position %d: %s", i, SDL_GetError());
-            //exit(EXIT_FAILURE);
         }
     }
 
