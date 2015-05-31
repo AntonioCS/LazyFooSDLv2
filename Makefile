@@ -13,7 +13,8 @@ SDL_OPTIONS_IMAGE=-I$(SDL_HEADER_DIR) -I$(SDL_HEADER_DIR_IMAGE) -L$(SDL_LINKER_D
 CFLAGS=-Wall -g -std=c11
 CC=gcc
 
-COMMON=lessons/common/init.c lessons/common/loadmedia.c lessons/common/close.c
+COMMON=lessons/common/init.c lessons/common/loadmedia.c lessons/common/resource_path.c lessons/common/close.c
+COMMON_SDLIMAGE=lessons/common/init.c lessons/common/init_sdlimage.c lessons/common/loadmedia_sdlimage.c lessons/common/resource_path.c lessons/common/close.c
 
 #NOTE!!!!! - The order is important. The .c files must come before the linker flags
 #http://stackoverflow.com/questions/11893996/why-does-the-order-of-l-option-in-gcc-matter
@@ -37,3 +38,7 @@ lesson04: lessons/lesson04.c $(COMMON)
 #Optimized surface loading and soft stretching
 lesson05: lessons/lesson05.c $(COMMON) lessons/common/optimize_image.c
 	$(CC) $+ $(CFLAGS) $(SDL_OPTIONS) -o bin/$@
+
+#Extension libraries and loading other image formats (SDL_Image)
+lesson06: lessons/lesson06.c $(COMMON_SDLIMAGE) lessons/common/optimize_image.c
+	$(CC) $+ $(CFLAGS) $(SDL_OPTIONS_IMAGE) -o bin/$@
