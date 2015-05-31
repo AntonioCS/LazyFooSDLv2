@@ -10,19 +10,11 @@
 
 #include <SDL.h>
 #include <stdio.h>
-#include <string.h> //strcat
-#include <stdlib.h> //MAX_PATH
+#include "resource_path.h"
 
 #ifdef	__cplusplus
 extern "C" {
 #endif
-
-#ifndef MAX_PATH
-    #define MAX_PATH 550
-#endif
-
-//#define resources_path(file) "C:/Users/antoniocs/Projects/Personal/c/LazyFooSDLv2/resources/"file
-#define RESOURCES_PATH "C:/Users/antoniocs/Projects/Personal/c/LazyFooSDLv2/resources/"
 
 SDL_Surface *loadMedia(char *);
 
