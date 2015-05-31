@@ -33,3 +33,7 @@ lesson03: lessons/lesson03.c $(COMMON)
 #Key presses
 lesson04: lessons/lesson04.c $(COMMON)
 	$(CC) $+ $(CFLAGS) $(SDL_OPTIONS) -o bin/$@
+
+#Optimized surface loading and soft stretching
+lesson05: lessons/lesson05.c $(COMMON) lessons/common/optimize_image.c
+	$(CC) $+ $(CFLAGS) $(SDL_OPTIONS) -o bin/$@
