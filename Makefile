@@ -42,3 +42,7 @@ lesson05: lessons/lesson05.c $(COMMON) lessons/common/optimize_image.c
 #Extension libraries and loading other image formats (SDL_Image)
 lesson06: lessons/lesson06.c $(COMMON_SDLIMAGE) lessons/common/optimize_image.c
 	$(CC) $+ $(CFLAGS) $(SDL_OPTIONS_IMAGE) -o bin/$@
+
+#Texture loading and rendering
+lesson07: lessons/lesson07.c $(COMMON_SDLIMAGE) lessons/common/optimize_image.c lessons/common/loadtexture.c
+	$(CC) $+ $(CFLAGS) $(SDL_OPTIONS_IMAGE) -o bin/$@
