@@ -19,7 +19,6 @@ extern "C" {
 
 bool init_sdlimage(void);
 
-
 #ifdef	__cplusplus
 }
 #endif
