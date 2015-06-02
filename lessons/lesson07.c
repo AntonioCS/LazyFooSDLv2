@@ -41,10 +41,18 @@ int main(int argc, char** argv) {
         //Create renderer for window
         gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED);
         if (gRenderer != NULL) {
+            //Initialize renderer color
+            SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+
             image = optimize_image(loadMedia_sdlimage("images/lesson07/texture.png"), gScreenSurface);
 
             if (image != NULL) {
                 gTexture = loadTexture(&image, gRenderer);
+
+                if (gTexture == NULL) {
+                    printf("Unable to load texture: %s\n", SDL_GetError());
+                    exit(EXIT_FAILURE);
+                }
 
                 //Main loop flag
                 bool quit = false;
@@ -62,7 +70,22 @@ int main(int argc, char** argv) {
                         }
                     }
 
+                    //Clear screen
+                    SDL_RenderClear(gRenderer);
+
+                    //Render texture to screen
+                    SDL_RenderCopy(gRenderer, gTexture, NULL, NULL);
+
+                    //Update screen
+                    SDL_RenderPresent(gRenderer);
                 }
+
+                //Free loaded image
+                SDL_DestroyTexture(gTexture);
+                gTexture = NULL;
+
+                //Destroy renderer
+                SDL_DestroyRenderer(gRenderer);
             }
         }
 
