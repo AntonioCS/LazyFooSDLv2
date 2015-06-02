@@ -11,13 +11,13 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <stdio.h>
-#include "init.h"
+#include <stdbool.h>
 
 #ifdef	__cplusplus
 extern "C" {
 #endif
 
-SDL_Window *init_sdlimage(SDL_Surface **);
+bool init_sdlimage(void);
 
 
 #ifdef	__cplusplus
