@@ -46,3 +46,7 @@ lesson06: lessons/lesson06.c $(COMMON_SDLIMAGE) lessons/common/optimize_image.c
 #Texture loading and rendering
 lesson07: lessons/lesson07.c $(COMMON_SDLIMAGE) lessons/common/optimize_image.c lessons/common/loadtexture.c
 	$(CC) $+ $(CFLAGS) $(SDL_OPTIONS_IMAGE) -o bin/$@
+
+#Geometry rendering
+lesson08: lessons/lesson08.c $(COMMON_SDLIMAGE) lessons/common/optimize_image.c lessons/common/loadtexture.c
+	$(CC) $+ $(CFLAGS) $(SDL_OPTIONS_IMAGE) -o bin/$@
