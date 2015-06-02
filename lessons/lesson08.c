@@ -15,7 +15,7 @@
 int main(int argc, char** argv) {
 
     //The window we'll be rendering to
-    SDL_Window* gWindow = NULL;
+    SDL_Window* gWindow = init(&gScreenSurface);
     
 
     return (EXIT_SUCCESS);
