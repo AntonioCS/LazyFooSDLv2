@@ -17,7 +17,16 @@
 extern "C" {
 #endif
 
-    SDL_Renderer *init_renderer(SDL_Window *);
+    struct renderer_RGBA {
+        Uint8  r;
+        Uint8  g;
+        Uint8  b;
+        Uint8  a;
+    };
+
+    SDL_Renderer *_init_renderer(SDL_Window *, struct renderer_RGBA *);
+
+#define init_renderer(window, __VA_ARGS__) _init_renderer(window, (struct renderer_RGBA){.r = 0xFF, .g = 0xFF, .b = 0xFF, .a = 0xFF, __VA_ARGS__});
 
 
 #ifdef	__cplusplus
