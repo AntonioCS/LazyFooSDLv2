@@ -9,7 +9,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include "common/init.h"
+#include "common/init_surface.h"
 #include "common/loadmedia.h"
 #include "common/close.h"
 
@@ -53,7 +53,7 @@ int main(int argc, char** argv) {
     };
 
 
-    gWindow = init(&gScreenSurface);
+    gWindow = init_surface(&gScreenSurface);
 
     if (gWindow) {
         if (load_all_images(gKeyPressSurfaces, key_images, KEY_PRESS_SURFACE_TOTAL)) {

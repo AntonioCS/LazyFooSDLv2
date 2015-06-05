@@ -8,7 +8,10 @@
 #include <SDL.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "common/init.h"
+#include "common/init_surface.h"
+
+//#include "common/init.h"
+
 
 //Screen dimension constants
 //const int SCREEN_WIDTH = 640;
@@ -21,7 +24,7 @@ int main(int argc, char* args[]) {
     //The surface contained by the window
     SDL_Surface *screenSurface = NULL;
     ///*
-    window = init(&screenSurface);
+    window = init_surface(&screenSurface);
     printf("window pointer values: %p\n", window);
     if (window) {
         printf("lesson init: screen pointer values: %p\n", screenSurface);

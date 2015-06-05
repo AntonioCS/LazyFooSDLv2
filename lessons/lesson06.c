@@ -10,8 +10,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include "common/init.h"
-#include "common/init_sdlimage.h"
+#include "common/init_surface.h"
+#include "common/init_only_sdlimage.h"
 #include "common/optimize_image.h"
 #include "common/loadmedia_sdlimage.h"
 #include "common/close.h"
@@ -25,11 +25,12 @@ int main(int argc, char** argv) {
     SDL_Surface *gScreenSurface = NULL;
 
     //The window we'll be rendering to
-    SDL_Window *gWindow = init_sdlimage(&gScreenSurface);
+    SDL_Window *gWindow = init_surface(&gScreenSurface);
+    //SDL_Window *gWindow = init_sdlimage(&gScreenSurface);
 
     SDL_Surface *image = NULL;
 
-    if (gWindow != NULL) {
+    if (gWindow != NULL && init_sdlimage()) {
         image = optimize_image(loadMedia_sdlimage("images/lesson06/loaded.png"), gScreenSurface);
 
         if (image != NULL) {

@@ -1,9 +1,9 @@
-#include "init.h"
+#include "init_surface.h"
 
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
 
-SDL_Window *init(SDL_Surface **screen) {
+SDL_Window *init_surface(SDL_Surface **screen) {
     SDL_Window *gWindow = NULL;
 
     //Initialize SDL
