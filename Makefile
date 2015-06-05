@@ -13,14 +13,14 @@ SDL_OPTIONS_IMAGE=-I$(SDL_HEADER_DIR) -I$(SDL_HEADER_DIR_IMAGE) -L$(SDL_LINKER_D
 CFLAGS=-Wall -g -std=c11
 CC=gcc
 
-COMMON=lessons/common/init.c lessons/common/loadmedia.c lessons/common/resource_path.c lessons/common/close.c
-COMMON_SDLIMAGE=lessons/common/init.c lessons/common/init_sdlimage.c lessons/common/loadmedia_sdlimage.c lessons/common/resource_path.c lessons/common/close.c
+COMMON=lessons/common/init_surface.c lessons/common/loadmedia.c lessons/common/resource_path.c lessons/common/close.c
+COMMON_SDLIMAGE=lessons/common/init_surface.c lessons/common/init_only_sdlimage.c lessons/common/loadmedia_sdlimage.c lessons/common/resource_path.c lessons/common/close.c
 
 #NOTE!!!!! - The order is important. The .c files must come before the linker flags
 #http://stackoverflow.com/questions/11893996/why-does-the-order-of-l-option-in-gcc-matter
 
 #Hello SDL
-lesson01: lessons/lesson01.c lessons/common/init.c
+lesson01: lessons/lesson01.c lessons/common/init_surface.c
 	$(CC) $+ $(CFLAGS) $(SDL_OPTIONS) -o bin/$@
 
 #Getting an image on the screen
@@ -48,5 +48,5 @@ lesson07: lessons/lesson07.c $(COMMON_SDLIMAGE) lessons/common/optimize_image.c 
 	$(CC) $+ $(CFLAGS) $(SDL_OPTIONS_IMAGE) -o bin/$@
 
 #Geometry rendering
-lesson08: lessons/lesson08.c $(COMMON_SDLIMAGE) lessons/common/optimize_image.c lessons/common/loadtexture.c
+lesson08: lessons/lesson08.c lessons/common/init_renderer.c
 	$(CC) $+ $(CFLAGS) $(SDL_OPTIONS_IMAGE) -o bin/$@
