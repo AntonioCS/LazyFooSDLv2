@@ -15,6 +15,7 @@ CC=gcc
 
 COMMON=lessons/common/init_surface.c lessons/common/loadmedia.c lessons/common/resource_path.c lessons/common/close.c
 COMMON_SDLIMAGE=lessons/common/init_surface.c lessons/common/init_only_sdlimage.c lessons/common/loadmedia_sdlimage.c lessons/common/resource_path.c lessons/common/close.c
+COMMON_SDLIMAGE_RENDERER=lessons/common/init_renderer.c lessons/common/init_only_sdlimage.c lessons/common/loadmedia_sdlimage.c lessons/common/resource_path.c
 
 #NOTE!!!!! - The order is important. The .c files must come before the linker flags
 #http://stackoverflow.com/questions/11893996/why-does-the-order-of-l-option-in-gcc-matter
@@ -49,4 +50,12 @@ lesson07: lessons/lesson07.c $(COMMON_SDLIMAGE) lessons/common/optimize_image.c 
 
 #Geometry rendering
 lesson08: lessons/lesson08.c lessons/common/init_renderer.c
+	$(CC) $+ $(CFLAGS) $(SDL_OPTIONS_IMAGE) -o bin/$@
+
+#The Viewport
+lesson09: lessons/lesson09.c $(COMMON_SDLIMAGE_RENDERER) lessons/common/loadtexture.c
+	$(CC) $+ $(CFLAGS) $(SDL_OPTIONS_IMAGE) -o bin/$@
+
+#The Viewport
+lesson10: lessons/lesson10.c $(COMMON_SDLIMAGE_RENDERER) lessons/class/LTexture.class.c
 	$(CC) $+ $(CFLAGS) $(SDL_OPTIONS_IMAGE) -o bin/$@
