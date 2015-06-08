@@ -114,12 +114,16 @@ int main(int argc, char** argv) {
                 //Update screen
                 SDL_RenderPresent(gRenderer);
 
+                SDL_Delay(50);
             }
 
 
             gBackgroundTexture->free(gBackgroundTexture);
             gFooTexture->free(gFooTexture);
         }
+    }
+    else {
+        printf("Something wrong with the window: %s\n", SDL_GetError());
     }
 
     //Destroy window
