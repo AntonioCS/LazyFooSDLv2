@@ -15,7 +15,6 @@ int main(int argc, char** argv) {
     SDL_Renderer *gRenderer = NULL;
     SDL_Window *gWindow = init_renderer(&gRenderer);
 
-
     if (gWindow != NULL && init_sdlimage()) {
         bool quit = false;
 
@@ -38,7 +37,14 @@ int main(int argc, char** argv) {
 
             //Update screen
             SDL_RenderPresent(gRenderer);
+
+            //So its not super cpu intensive
+            SDL_Delay(50);
         }
+    }
+    else {
+        printf("Something wrong with the window: %s\n", SDL_GetError());
+        exit(EXIT_FAILURE);
     }
 
     //Destroy window
