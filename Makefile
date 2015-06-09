@@ -56,6 +56,14 @@ lesson08: lessons/lesson08.c lessons/common/init_renderer.c
 lesson09: lessons/lesson09.c $(COMMON_SDLIMAGE_RENDERER) lessons/common/loadtexture.c
 	$(CC) $+ $(CFLAGS) $(SDL_OPTIONS_IMAGE) -o bin/$@
 
-#The Viewport
+#Color Keying
 lesson10: lessons/lesson10.c $(COMMON_SDLIMAGE_RENDERER) lessons/class/LTexture.class.c
+	$(CC) $+ $(CFLAGS) $(SDL_OPTIONS_IMAGE) -o bin/$@
+
+#Clip Rendering and Sprite Sheets
+lesson11: lessons/lesson11.c $(COMMON_SDLIMAGE_RENDERER) lessons/class/LTexture.class.c
+	$(CC) $+ $(CFLAGS) $(SDL_OPTIONS_IMAGE) -o bin/$@
+
+#Color Modulation
+lesson12: lessons/lesson12.c $(COMMON_SDLIMAGE_RENDERER) lessons/class/LTexture.class.c
 	$(CC) $+ $(CFLAGS) $(SDL_OPTIONS_IMAGE) -o bin/$@
