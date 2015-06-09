@@ -2,10 +2,11 @@
 #include "LTexture.class.h"
 
 //Private struct
+
 struct p_data {
     //The actual hardware texture
     SDL_Texture *mTexture;
-    
+
     SDL_Renderer *gRenderer;
 
     //Image dimensions
@@ -14,11 +15,12 @@ struct p_data {
 };
 
 static bool load_from_file(LTexture *, char *);
-static void render(LTexture *, int, int);
-static void render_rect(LTexture *, int, int, SDL_Rect *);
+static void render(LTexture *, int, int, SDL_Rect *);
 static int get_width(LTexture *);
 static int get_height(LTexture *);
 static void lt_free(LTexture *);
+//Set color modulation
+static void set_color(LTexture *, Uint8, Uint8, Uint8);
 
 LTexture *lt_init(SDL_Renderer *gRenderer) {
     LTexture *lt_new = malloc(sizeof (LTexture));
@@ -39,6 +41,7 @@ LTexture *lt_init(SDL_Renderer *gRenderer) {
             lt_new->get_width = get_width;
             lt_new->load_from_file = load_from_file;
             lt_new->render = render;
+            lt_new->set_color = set_color;
         } else {
             //printf("Unable to allocate memory for LTexture internal structure\n");
             free(lt_new);
@@ -100,31 +103,19 @@ void lt_free(LTexture *lt) {
     }
 }
 
-void render(LTexture *lt, int x, int y) {
+void render(LTexture *lt, int x, int y, SDL_Rect *clip) {
     struct p_data *pd = lt->private_data;
 
-    //Set rendering space and render to screen
-    SDL_Rect renderQuad = {.x = x, .y = y, .w = pd->mWidth, .h = pd->mHeight};
-    SDL_RenderCopy(pd->gRenderer, pd->mTexture, NULL, &renderQuad);
+    SDL_Rect renderQuad = {
+        .x = x,
+        .y = y,
+        .w = (clip != NULL ? clip->w : pd->mWidth),
+        .h = (clip != NULL ? clip->h : pd->mHeight)
+    };
+
+
+    SDL_RenderCopy(pd->gRenderer, pd->mTexture, clip, &renderQuad);
 }
-
-void render_rect(LTexture *lt, int x, int y, SDL_Rect *clip) {
-    struct p_data *pd = lt->private_data;
-    //save original values
-    int w = pd->mWidth;
-    int h = pd->mHeight;
-
-    pd->mWidth = clip->w;
-    pd->mHeight = clip->h;
-
-    render(lt, x, y);
-
-    //restore old values
-    pd->mWidth = w;
-    pd->mHeight = h;
-}
-
-
 
 int get_width(LTexture *lt) {
     struct p_data *pd = lt->private_data;
@@ -134,4 +125,11 @@ int get_width(LTexture *lt) {
 int get_height(LTexture *lt) {
     struct p_data *pd = lt->private_data;
     return pd->mHeight;
+}
+
+void set_color(LTexture *lt, Uint8 red, Uint8 green, Uint8 blue) {
+    struct p_data *pd = lt->private_data;
+    
+    //Modulate texture
+    SDL_SetTextureColorMod(pd->mTexture, red, green, blue);
 }

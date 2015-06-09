@@ -32,13 +32,14 @@ extern "C" {
         void (*free)(LTexture *);
 
         //Renders texture at given point
-        void (*render)(LTexture *, int, int);
-        //Renders texture at given point with the given dimensions
-        void (*render_rect)(LTexture *, int, int, SDL_Rect *);
-
+        void (*render)(LTexture *, int, int, SDL_Rect *);
+        
         //Gets image dimensions
         int (*get_width)(LTexture *);
         int (*get_height)(LTexture *);
+
+        //Set color modulation
+        void (*set_color)(LTexture *, Uint8, Uint8, Uint8);
 
         void *private_data;
     };
