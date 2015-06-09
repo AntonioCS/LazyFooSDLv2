@@ -39,7 +39,7 @@ int main(int argc, char** argv) {
             SDL_RenderPresent(gRenderer);
 
             //So its not super cpu intensive
-            SDL_Delay(50);
+            SDL_Delay(1);
         }
     }
     else {
