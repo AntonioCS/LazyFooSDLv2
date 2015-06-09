@@ -67,3 +67,7 @@ lesson11: lessons/lesson11.c $(COMMON_SDLIMAGE_RENDERER) lessons/class/LTexture.
 #Color Modulation
 lesson12: lessons/lesson12.c $(COMMON_SDLIMAGE_RENDERER) lessons/class/LTexture.class.c
 	$(CC) $+ $(CFLAGS) $(SDL_OPTIONS_IMAGE) -o bin/$@
+
+#Alpha Blending
+lesson13: lessons/lesson13.c $(COMMON_SDLIMAGE_RENDERER) lessons/class/LTexture.class.c
+	$(CC) $+ $(CFLAGS) $(SDL_OPTIONS_IMAGE) -o bin/$@
