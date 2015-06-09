@@ -114,7 +114,7 @@ int main(int argc, char** argv) {
                 //Update screen
                 SDL_RenderPresent(gRenderer);
 
-                SDL_Delay(50);
+                SDL_Delay(1);
             }
 
 
