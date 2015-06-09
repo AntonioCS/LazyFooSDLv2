@@ -20,7 +20,7 @@
 extern "C" {
 #endif
 
- typedef struct LTexture LTexture;
+    typedef struct LTexture LTexture;
 
     //Texture wrapper struct
 
@@ -33,13 +33,19 @@ extern "C" {
 
         //Renders texture at given point
         void (*render)(LTexture *, int, int, SDL_Rect *);
-        
+
         //Gets image dimensions
         int (*get_width)(LTexture *);
         int (*get_height)(LTexture *);
 
         //Set color modulation
         void (*set_color)(LTexture *, Uint8, Uint8, Uint8);
+
+        //Set blending
+        void (*set_blend_mode)(LTexture *, SDL_BlendMode);
+
+        //Set alpha modulation
+        void (*set_alpha)(LTexture *, Uint8);
 
         void *private_data;
     };

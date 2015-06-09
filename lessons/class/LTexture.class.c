@@ -21,6 +21,10 @@ static int get_height(LTexture *);
 static void lt_free(LTexture *);
 //Set color modulation
 static void set_color(LTexture *, Uint8, Uint8, Uint8);
+//Set blending
+static void set_blend_mode(LTexture *, SDL_BlendMode);
+//Set alpha modulation
+static void set_alpha(LTexture *, Uint8);
 
 LTexture *lt_init(SDL_Renderer *gRenderer) {
     LTexture *lt_new = malloc(sizeof (LTexture));
@@ -41,7 +45,11 @@ LTexture *lt_init(SDL_Renderer *gRenderer) {
             lt_new->get_width = get_width;
             lt_new->load_from_file = load_from_file;
             lt_new->render = render;
+
             lt_new->set_color = set_color;
+
+            lt_new->set_blend_mode = set_blend_mode;
+            lt_new->set_alpha = set_alpha;
         } else {
             //printf("Unable to allocate memory for LTexture internal structure\n");
             free(lt_new);
@@ -129,7 +137,21 @@ int get_height(LTexture *lt) {
 
 void set_color(LTexture *lt, Uint8 red, Uint8 green, Uint8 blue) {
     struct p_data *pd = lt->private_data;
-    
+
     //Modulate texture
     SDL_SetTextureColorMod(pd->mTexture, red, green, blue);
+}
+
+//Set blending
+void set_blend_mode(LTexture *lt, SDL_BlendMode blending) {
+    struct p_data *pd = lt->private_data;
+    //Set blending function
+    SDL_SetTextureBlendMode(pd->mTexture, blending);
+}
+
+//Set alpha modulation
+void set_alpha(LTexture *lt, Uint8 alpha) {
+    struct p_data *pd = lt->private_data;
+
+    SDL_SetTextureAlphaMod(pd->mTexture, alpha);
 }
