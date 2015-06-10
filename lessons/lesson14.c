@@ -80,6 +80,7 @@ int main(int argc, char** argv) {
                 }
 
                 //So its not super cpu intensive
+                //This delay has to be here otherwise the images are switched too fast
                 SDL_Delay(50);
             }
 
