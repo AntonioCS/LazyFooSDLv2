@@ -33,10 +33,10 @@ int main(int argc, char** argv) {
         SDL_Event e;
 
         //Scene texture
-        LTexture *gModulatedTexture = lt_init(gRenderer);
+        LTexture *gModulatedTexture = LTexture_Init(gRenderer);
 
         if (gModulatedTexture == NULL ||
-                !gModulatedTexture->load_from_file(gModulatedTexture, resource_path("images/lesson12/colors.png"))) {
+                !gModulatedTexture->loadFromFile(gModulatedTexture, resource_path("images/lesson12/colors.png"))) {
             printf("Unable to allocate ltexture or image\n");
 
         } else {
@@ -64,7 +64,7 @@ int main(int argc, char** argv) {
                 SDL_RenderClear(gRenderer);
 
                 //Modulate and render texture
-                gModulatedTexture->set_color(gModulatedTexture, r, g, b);
+                gModulatedTexture->setColor(gModulatedTexture, r, g, b);
                 gModulatedTexture->render(gModulatedTexture, 0, 0, NULL);
 
 

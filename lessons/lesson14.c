@@ -30,10 +30,10 @@ int main(int argc, char** argv) {
         //Walking animation
         const int WALKING_ANIMATION_FRAMES = 4;
         SDL_Rect gSpriteClips[ WALKING_ANIMATION_FRAMES ];
-        LTexture *gSpriteSheetTexture = lt_init(gRenderer);
+        LTexture *gSpriteSheetTexture = LTexture_Init(gRenderer);
 
         if (gSpriteSheetTexture == NULL ||
-                !gSpriteSheetTexture->load_from_file(gSpriteSheetTexture, resource_path("images/lesson14/foo.png"))) {
+                !gSpriteSheetTexture->loadFromFile(gSpriteSheetTexture, resource_path("images/lesson14/foo.png"))) {
             printf("Unable to allocate ltexture or image\n");
 
         } else {

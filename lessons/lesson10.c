@@ -25,16 +25,16 @@ int main(int argc, char** argv) {
 
 
     if (gWindow != NULL && init_sdlimage()) {
-        LTexture *gFooTexture = lt_init(gRenderer);
-        LTexture *gBackgroundTexture = lt_init(gRenderer);
+        LTexture *gFooTexture = LTexture_Init(gRenderer);
+        LTexture *gBackgroundTexture = LTexture_Init(gRenderer);
 
         if (gFooTexture == NULL || gBackgroundTexture == NULL) {
             printf("Unable to allocate space for LTextures\n");
             exit(EXIT_FAILURE);
         }
 
-        if (gFooTexture->load_from_file(gFooTexture, resource_path("images/lesson10/foo.png")) &&
-                gBackgroundTexture->load_from_file(gBackgroundTexture, resource_path("images/lesson10/background.png"))) {
+        if (gFooTexture->loadFromFile(gFooTexture, resource_path("images/lesson10/foo.png")) &&
+                gBackgroundTexture->loadFromFile(gBackgroundTexture, resource_path("images/lesson10/background.png"))) {
 
             bool quit = false;
             SDL_Event e;
@@ -106,10 +106,10 @@ int main(int argc, char** argv) {
                 SDL_RenderClear(gRenderer);
 
                 //Render background texture to screen
-                gBackgroundTexture->render(gBackgroundTexture, 0, 0);
+                gBackgroundTexture->render(gBackgroundTexture, 0, 0, NULL);
 
                 //Render Foo' to the screen
-                gFooTexture->render(gFooTexture, x, y);
+                gFooTexture->render(gFooTexture, x, y, NULL);
 
                 //Update screen
                 SDL_RenderPresent(gRenderer);

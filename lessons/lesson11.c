@@ -20,8 +20,7 @@ void initialize_sprit_coords(SDL_Rect *);
 int main(int argc, char** argv) {
     const int SCREEN_WIDTH = 640;
     const int SCREEN_HEIGHT = 480;
-
-    SDL_Surface *image = NULL;
+    
     SDL_Renderer *gRenderer = NULL;
     SDL_Window *gWindow = init_renderer(&gRenderer);
 
@@ -33,10 +32,10 @@ int main(int argc, char** argv) {
 
         //Scene sprites
         SDL_Rect gSpriteClips[4];
-        LTexture *gSpriteSheetTexture = lt_init(gRenderer);
+        LTexture *gSpriteSheetTexture = LTexture_Init(gRenderer);
 
         if (gSpriteSheetTexture == NULL ||
-                ! gSpriteSheetTexture->load_from_file(gSpriteSheetTexture, resource_path("images/lesson11/dots.png"))) {
+                ! gSpriteSheetTexture->loadFromFile(gSpriteSheetTexture, resource_path("images/lesson11/dots.png"))) {
             printf("Unable to allocate ltexture or image\n");
 
         } else {

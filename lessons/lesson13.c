@@ -29,14 +29,14 @@ int main(int argc, char** argv) {
         SDL_Event e;
 
         //Scene textures
-        LTexture *gModulatedTexture = lt_init(gRenderer);
-        LTexture *gBackgroundTexture = lt_init(gRenderer);
+        LTexture *gModulatedTexture = LTexture_Init(gRenderer);
+        LTexture *gBackgroundTexture = LTexture_Init(gRenderer);
 
         if ((gModulatedTexture == NULL ||
-                !gModulatedTexture->load_from_file(gModulatedTexture, resource_path("images/lesson13/fadeout.png")))
+                !gModulatedTexture->loadFromFile(gModulatedTexture, resource_path("images/lesson13/fadeout.png")))
                 ||
                 (gBackgroundTexture == NULL ||
-                !gBackgroundTexture->load_from_file(gBackgroundTexture, resource_path("images/lesson13/fadein.png")))
+                !gBackgroundTexture->loadFromFile(gBackgroundTexture, resource_path("images/lesson13/fadein.png")))
                 ) {
             printf("Unable to allocate ltexture or image\n");
 
@@ -45,7 +45,7 @@ int main(int argc, char** argv) {
             //Modulation component
             Uint8 a = 255;
 
-            gModulatedTexture->set_blend_mode(gModulatedTexture, SDL_BLENDMODE_BLEND);
+            gModulatedTexture->setBlendMode(gModulatedTexture, SDL_BLENDMODE_BLEND);
 
             //While application is running
             while (!quit) {
@@ -67,7 +67,7 @@ int main(int argc, char** argv) {
                 gBackgroundTexture->render(gBackgroundTexture, 0, 0, NULL);
 
                 //Render front blended
-                gModulatedTexture->set_alpha(gModulatedTexture, a);
+                gModulatedTexture->setAlpha(gModulatedTexture, a);
                 gModulatedTexture->render(gModulatedTexture, 0, 0, NULL);
 
                 //Update screen
