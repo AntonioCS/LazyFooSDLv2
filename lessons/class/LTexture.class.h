@@ -26,7 +26,7 @@ extern "C" {
 
     struct LTexture {
         //Loads image at specified path
-        bool (*load_from_file)(LTexture *, char *);
+        bool (*loadFromFile)(LTexture *, char *);
 
         //Deallocates texture
         void (*free)(LTexture *);
@@ -35,22 +35,22 @@ extern "C" {
         void (*render)(LTexture *, int, int, SDL_Rect *);
 
         //Gets image dimensions
-        int (*get_width)(LTexture *);
-        int (*get_height)(LTexture *);
+        int (*getWidth)(LTexture *);
+        int (*getHeight)(LTexture *);
 
         //Set color modulation
-        void (*set_color)(LTexture *, Uint8, Uint8, Uint8);
+        void (*setColor)(LTexture *, Uint8, Uint8, Uint8);
 
         //Set blending
-        void (*set_blend_mode)(LTexture *, SDL_BlendMode);
+        void (*setBlendMode)(LTexture *, SDL_BlendMode);
 
         //Set alpha modulation
-        void (*set_alpha)(LTexture *, Uint8);
+        void (*setAlpha)(LTexture *, Uint8);
 
-        void *private_data;
+        void *privateData;
     };
 
-    LTexture *lt_init(SDL_Renderer *);
+    LTexture *LTexture_Init(SDL_Renderer *);
 
 
 #ifdef	__cplusplus

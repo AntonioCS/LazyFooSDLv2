@@ -14,19 +14,19 @@ struct p_data {
     int mHeight;
 };
 
-static bool load_from_file(LTexture *, char *);
+static bool loadFromFile(LTexture *, char *);
 static void render(LTexture *, int, int, SDL_Rect *);
-static int get_width(LTexture *);
-static int get_height(LTexture *);
-static void lt_free(LTexture *);
+static int getWidth(LTexture *);
+static int getHeight(LTexture *);
+static void ltFree(LTexture *);
 //Set color modulation
-static void set_color(LTexture *, Uint8, Uint8, Uint8);
+static void setColor(LTexture *, Uint8, Uint8, Uint8);
 //Set blending
-static void set_blend_mode(LTexture *, SDL_BlendMode);
+static void setBlendMode(LTexture *, SDL_BlendMode);
 //Set alpha modulation
-static void set_alpha(LTexture *, Uint8);
+static void setAlpha(LTexture *, Uint8);
 
-LTexture *lt_init(SDL_Renderer *gRenderer) {
+LTexture *LTexture_Init(SDL_Renderer *gRenderer) {
     LTexture *lt_new = malloc(sizeof (LTexture));
 
     if (lt_new) {
@@ -38,18 +38,18 @@ LTexture *lt_init(SDL_Renderer *gRenderer) {
             lt_p_data->mTexture = NULL;
             lt_p_data->gRenderer = gRenderer;
 
-            lt_new->private_data = lt_p_data;
+            lt_new->privateData = lt_p_data;
 
-            lt_new->free = lt_free;
-            lt_new->get_height = get_height;
-            lt_new->get_width = get_width;
-            lt_new->load_from_file = load_from_file;
+            lt_new->free = ltFree;
+            lt_new->getHeight = getHeight;
+            lt_new->getWidth = getWidth;
+            lt_new->loadFromFile = loadFromFile;
             lt_new->render = render;
 
-            lt_new->set_color = set_color;
+            lt_new->setColor = setColor;
 
-            lt_new->set_blend_mode = set_blend_mode;
-            lt_new->set_alpha = set_alpha;
+            lt_new->setBlendMode = setBlendMode;
+            lt_new->setAlpha = setAlpha;
         } else {
             //printf("Unable to allocate memory for LTexture internal structure\n");
             free(lt_new);
@@ -63,10 +63,10 @@ LTexture *lt_init(SDL_Renderer *gRenderer) {
     return lt_new;
 }
 
-bool load_from_file(LTexture *lt, char *path) {
+bool loadFromFile(LTexture *lt, char *path) {
     //Get rid of preexisting texture
-    lt_free(lt);
-    struct p_data *pd = lt->private_data;
+    ltFree(lt);
+    struct p_data *pd = lt->privateData;
 
     //The final texture
     SDL_Texture *newTexture = NULL;
@@ -98,8 +98,8 @@ bool load_from_file(LTexture *lt, char *path) {
     return (pd->mTexture != NULL);
 }
 
-void lt_free(LTexture *lt) {
-    struct p_data *pd = lt->private_data;
+void ltFree(LTexture *lt) {
+    struct p_data *pd = lt->privateData;
 
     //Free texture if it exists
     if (pd->mTexture != NULL) {
@@ -112,7 +112,7 @@ void lt_free(LTexture *lt) {
 }
 
 void render(LTexture *lt, int x, int y, SDL_Rect *clip) {
-    struct p_data *pd = lt->private_data;
+    struct p_data *pd = lt->privateData;
 
     SDL_Rect renderQuad = {
         .x = x,
@@ -125,33 +125,33 @@ void render(LTexture *lt, int x, int y, SDL_Rect *clip) {
     SDL_RenderCopy(pd->gRenderer, pd->mTexture, clip, &renderQuad);
 }
 
-int get_width(LTexture *lt) {
-    struct p_data *pd = lt->private_data;
+int getWidth(LTexture *lt) {
+    struct p_data *pd = lt->privateData;
     return pd->mWidth;
 }
 
-int get_height(LTexture *lt) {
-    struct p_data *pd = lt->private_data;
+int getHeight(LTexture *lt) {
+    struct p_data *pd = lt->privateData;
     return pd->mHeight;
 }
 
-void set_color(LTexture *lt, Uint8 red, Uint8 green, Uint8 blue) {
-    struct p_data *pd = lt->private_data;
+void setColor(LTexture *lt, Uint8 red, Uint8 green, Uint8 blue) {
+    struct p_data *pd = lt->privateData;
 
     //Modulate texture
     SDL_SetTextureColorMod(pd->mTexture, red, green, blue);
 }
 
 //Set blending
-void set_blend_mode(LTexture *lt, SDL_BlendMode blending) {
-    struct p_data *pd = lt->private_data;
+void setBlendMode(LTexture *lt, SDL_BlendMode blending) {
+    struct p_data *pd = lt->privateData;
     //Set blending function
     SDL_SetTextureBlendMode(pd->mTexture, blending);
 }
 
 //Set alpha modulation
-void set_alpha(LTexture *lt, Uint8 alpha) {
-    struct p_data *pd = lt->private_data;
+void setAlpha(LTexture *lt, Uint8 alpha) {
+    struct p_data *pd = lt->privateData;
 
     SDL_SetTextureAlphaMod(pd->mTexture, alpha);
 }
