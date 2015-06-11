@@ -16,6 +16,7 @@ struct p_data {
 
 static bool loadFromFile(LTexture *, char *);
 static void render(LTexture *, int, int, SDL_Rect *);
+static void renderAngle(LTexture *, int, int, SDL_Rect *, double, SDL_Point *, SDL_RendererFlip);
 static int getWidth(LTexture *);
 static int getHeight(LTexture *);
 static void ltFree(LTexture *);
@@ -45,6 +46,7 @@ LTexture *LTexture_Init(SDL_Renderer *gRenderer) {
             lt_new->getWidth = getWidth;
             lt_new->loadFromFile = loadFromFile;
             lt_new->render = render;
+            lt_new->renderAngle = renderAngle;
 
             lt_new->setColor = setColor;
 
@@ -111,18 +113,39 @@ void ltFree(LTexture *lt) {
     }
 }
 
+static SDL_Rect *renderHandleRect(struct p_data *pd, int x, int y, SDL_Rect *clip) {
+    SDL_Rect *renderRect = malloc(sizeof (SDL_Rect));
+
+    if (renderRect != NULL) {
+        renderRect->x = x;
+        renderRect->y = y;
+        renderRect->w = (clip != NULL ? clip->w : pd->mWidth);
+        renderRect->h = (clip != NULL ? clip->h : pd->mHeight);
+    }
+
+    return renderRect;
+}
+
 void render(LTexture *lt, int x, int y, SDL_Rect *clip) {
     struct p_data *pd = lt->privateData;
+    /*
+        SDL_Rect renderQuad = {
+            .x = x,
+            .y = y,
+            .w = (clip != NULL ? clip->w : pd->mWidth),
+            .h = (clip != NULL ? clip->h : pd->mHeight)
+        };
+     */
+    SDL_RenderCopy(pd->gRenderer, pd->mTexture, clip,
+            renderHandleRect(pd, x, y, clip));
+}
 
-    SDL_Rect renderQuad = {
-        .x = x,
-        .y = y,
-        .w = (clip != NULL ? clip->w : pd->mWidth),
-        .h = (clip != NULL ? clip->h : pd->mHeight)
-    };
+void renderAngle(LTexture *lt, int x, int y, SDL_Rect *clip, double angle, SDL_Point *center, SDL_RendererFlip flip) {
+    struct p_data *pd = lt->privateData;
 
-
-    SDL_RenderCopy(pd->gRenderer, pd->mTexture, clip, &renderQuad);
+    //Render to screen
+    SDL_RenderCopyEx(pd->gRenderer, pd->mTexture, clip,
+            renderHandleRect(pd, x, y, clip), angle, center, flip);
 }
 
 int getWidth(LTexture *lt) {
@@ -143,6 +166,7 @@ void setColor(LTexture *lt, Uint8 red, Uint8 green, Uint8 blue) {
 }
 
 //Set blending
+
 void setBlendMode(LTexture *lt, SDL_BlendMode blending) {
     struct p_data *pd = lt->privateData;
     //Set blending function
@@ -150,6 +174,7 @@ void setBlendMode(LTexture *lt, SDL_BlendMode blending) {
 }
 
 //Set alpha modulation
+
 void setAlpha(LTexture *lt, Uint8 alpha) {
     struct p_data *pd = lt->privateData;
 
