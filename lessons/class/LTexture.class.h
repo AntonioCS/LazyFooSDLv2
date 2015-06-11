@@ -33,6 +33,8 @@ extern "C" {
 
         //Renders texture at given point
         void (*render)(LTexture *, int, int, SDL_Rect *);
+        //Same as above
+        void (*renderAngle)(LTexture *, int , int, SDL_Rect *, double, SDL_Point *, SDL_RendererFlip);
 
         //Gets image dimensions
         int (*getWidth)(LTexture *);
