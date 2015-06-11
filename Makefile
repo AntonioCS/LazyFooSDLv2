@@ -75,3 +75,7 @@ lesson13: lessons/lesson13.c $(COMMON_SDLIMAGE_RENDERER) lessons/class/LTexture.
 #Animated Sprites and Vsync
 lesson14: lessons/lesson14.c $(COMMON_SDLIMAGE_RENDERER) lessons/class/LTexture.class.c
 	$(CC) $+ $(CFLAGS) $(SDL_OPTIONS_IMAGE) -o bin/$@
+
+#Rotation and Flipping
+lesson15: lessons/lesson15.c $(COMMON_SDLIMAGE_RENDERER) lessons/class/LTexture.class.c
+	$(CC) $+ $(CFLAGS) $(SDL_OPTIONS_IMAGE) -o bin/$@
