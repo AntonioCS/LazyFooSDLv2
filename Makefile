@@ -1,14 +1,18 @@
 SDL_HEADER_DIR=C:/SDL2/SDL2-2.0.3/i686-w64-mingw32/include/SDL2/
 SDL_HEADER_DIR_IMAGE=C:/SDL2/SDL2_image-2.0.0/i686-w64-mingw32/include/SDL2/
+SDL_HEADER_DIR_TTF=C:/SDL2/SDL2_ttf-2.0.12/i686-w64-mingw32/include/SDL2/
 
 SDL_LINKER_DIR=C:/SDL2/SDL2-2.0.3/i686-w64-mingw32/lib/
 SDL_LINKER_DIR_IMAGE=C:/SDL2/SDL2_image-2.0.0/i686-w64-mingw32/lib/
+SDL_LINKER_DIR_TTF=C:/SDL2/SDL2_ttf-2.0.12/i686-w64-mingw32/lib/
 
 SDL_LINKER_OPTIONS=-lmingw32 -lSDL2main -lSDL2
 SDL_LINKER_OPTIONS_IMAGE=-lSDL2_image
+SDL_LINKER_OPTIONS_TTF=-lSDL2_ttf
 
 SDL_OPTIONS=-I$(SDL_HEADER_DIR) -L$(SDL_LINKER_DIR) $(SDL_LINKER_OPTIONS)
-SDL_OPTIONS_IMAGE=-I$(SDL_HEADER_DIR) -I$(SDL_HEADER_DIR_IMAGE) -L$(SDL_LINKER_DIR) -L$(SDL_LINKER_DIR_IMAGE) $(SDL_LINKER_OPTIONS) $(SDL_LINKER_OPTIONS_IMAGE)
+SDL_OPTIONS_IMAGE=-I$(SDL_HEADER_DIR_IMAGE) -L$(SDL_LINKER_DIR_IMAGE) $(SDL_LINKER_OPTIONS_IMAGE)
+SDL_OPTIONS_TTF=-I$(SDL_HEADER_DIR_TTF) -L$(SDL_LINKER_DIR_TTF) $(SDL_LINKER_OPTIONS_TTF)
 
 CFLAGS=-Wall -g -std=c11
 CC=gcc
@@ -42,40 +46,44 @@ lesson05: lessons/lesson05.c $(COMMON) lessons/common/optimize_image.c
 
 #Extension libraries and loading other image formats (SDL_Image)
 lesson06: lessons/lesson06.c $(COMMON_SDLIMAGE) lessons/common/optimize_image.c
-	$(CC) $+ $(CFLAGS) $(SDL_OPTIONS_IMAGE) -o bin/$@
+	$(CC) $+ $(CFLAGS) $(SDL_OPTIONS) $(SDL_OPTIONS_IMAGE) -o bin/$@
 
 #Texture loading and rendering
 lesson07: lessons/lesson07.c $(COMMON_SDLIMAGE) lessons/common/optimize_image.c lessons/common/loadtexture.c
-	$(CC) $+ $(CFLAGS) $(SDL_OPTIONS_IMAGE) -o bin/$@
+	$(CC) $+ $(CFLAGS) $(SDL_OPTIONS) $(SDL_OPTIONS_IMAGE) -o bin/$@
 
 #Geometry rendering
 lesson08: lessons/lesson08.c lessons/common/init_renderer.c
-	$(CC) $+ $(CFLAGS) $(SDL_OPTIONS_IMAGE) -o bin/$@
+	$(CC) $+ $(CFLAGS) $(SDL_OPTIONS) $(SDL_OPTIONS_IMAGE) -o bin/$@
 
 #The Viewport
 lesson09: lessons/lesson09.c $(COMMON_SDLIMAGE_RENDERER) lessons/common/loadtexture.c
-	$(CC) $+ $(CFLAGS) $(SDL_OPTIONS_IMAGE) -o bin/$@
+	$(CC) $+ $(CFLAGS) $(SDL_OPTIONS) $(SDL_OPTIONS_IMAGE) -o bin/$@
 
 #Color Keying
 lesson10: lessons/lesson10.c $(COMMON_SDLIMAGE_RENDERER) lessons/class/LTexture.class.c
-	$(CC) $+ $(CFLAGS) $(SDL_OPTIONS_IMAGE) -o bin/$@
+	$(CC) $+ $(CFLAGS) $(SDL_OPTIONS) $(SDL_OPTIONS_IMAGE) -o bin/$@
 
 #Clip Rendering and Sprite Sheets
 lesson11: lessons/lesson11.c $(COMMON_SDLIMAGE_RENDERER) lessons/class/LTexture.class.c
-	$(CC) $+ $(CFLAGS) $(SDL_OPTIONS_IMAGE) -o bin/$@
+	$(CC) $+ $(CFLAGS) $(SDL_OPTIONS) $(SDL_OPTIONS_IMAGE) -o bin/$@
 
 #Color Modulation
 lesson12: lessons/lesson12.c $(COMMON_SDLIMAGE_RENDERER) lessons/class/LTexture.class.c
-	$(CC) $+ $(CFLAGS) $(SDL_OPTIONS_IMAGE) -o bin/$@
+	$(CC) $+ $(CFLAGS) $(SDL_OPTIONS) $(SDL_OPTIONS_IMAGE) -o bin/$@
 
 #Alpha Blending
 lesson13: lessons/lesson13.c $(COMMON_SDLIMAGE_RENDERER) lessons/class/LTexture.class.c
-	$(CC) $+ $(CFLAGS) $(SDL_OPTIONS_IMAGE) -o bin/$@
+	$(CC) $+ $(CFLAGS) $(SDL_OPTIONS) $(SDL_OPTIONS_IMAGE) -o bin/$@
 
 #Animated Sprites and Vsync
 lesson14: lessons/lesson14.c $(COMMON_SDLIMAGE_RENDERER) lessons/class/LTexture.class.c
-	$(CC) $+ $(CFLAGS) $(SDL_OPTIONS_IMAGE) -o bin/$@
+	$(CC) $+ $(CFLAGS) $(SDL_OPTIONS) $(SDL_OPTIONS_IMAGE) -o bin/$@
 
 #Rotation and Flipping
 lesson15: lessons/lesson15.c $(COMMON_SDLIMAGE_RENDERER) lessons/class/LTexture.class.c
-	$(CC) $+ $(CFLAGS) $(SDL_OPTIONS_IMAGE) -o bin/$@
+	$(CC) $+ $(CFLAGS) $(SDL_OPTIONS) $(SDL_OPTIONS_IMAGE) -o bin/$@
+	
+#True Type Fonts
+lesson16: lessons/lesson16.c $(COMMON_SDLIMAGE_RENDERER) lessons/class/LTexture.class.c
+	$(CC) $+ $(CFLAGS) $(SDL_OPTIONS) $(SDL_OPTIONS_IMAGE) $(SDL_OPTIONS_TTF) -o bin/$@
