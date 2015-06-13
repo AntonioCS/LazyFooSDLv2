@@ -11,6 +11,7 @@
 
 #include <SDL.h>
 #include <SDL_image.h>
+#include <SDL_ttf.h>
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
@@ -50,7 +51,7 @@ extern "C" {
         void (*setAlpha)(LTexture *, Uint8);
 
         //Creates image from font string bool
-        bool (*loadFromRenderedText)(LTexture, char *, SDL_Color);
+        bool (*loadFromRenderedText)(LTexture *, char *, TTF_Font *, SDL_Color);
 
         void *privateData;
     };

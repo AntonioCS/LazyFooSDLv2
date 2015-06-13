@@ -26,6 +26,8 @@ static void setColor(LTexture *, Uint8, Uint8, Uint8);
 static void setBlendMode(LTexture *, SDL_BlendMode);
 //Set alpha modulation
 static void setAlpha(LTexture *, Uint8);
+//Creates image from font string bool
+static bool loadFromRenderedText(LTexture *, char *, TTF_Font *, SDL_Color);
 
 LTexture *LTexture_Init(SDL_Renderer *gRenderer) {
     LTexture *lt_new = malloc(sizeof (LTexture));
@@ -52,6 +54,8 @@ LTexture *LTexture_Init(SDL_Renderer *gRenderer) {
 
             lt_new->setBlendMode = setBlendMode;
             lt_new->setAlpha = setAlpha;
+
+            lt_new->loadFromRenderedText = loadFromRenderedText;
         } else {
             //printf("Unable to allocate memory for LTexture internal structure\n");
             free(lt_new);
@@ -179,4 +183,37 @@ void setAlpha(LTexture *lt, Uint8 alpha) {
     struct p_data *pd = lt->privateData;
 
     SDL_SetTextureAlphaMod(pd->mTexture, alpha);
+}
+
+//Creates image from font string bool
+
+bool loadFromRenderedText(LTexture *lt, char *textureText, TTF_Font *gFont, SDL_Color textColor) {
+    struct p_data *pd = lt->privateData;
+
+    //Get rid of preexisting texture
+    lt->free(lt);
+
+    //Render text surface
+    SDL_Surface *textSurface = TTF_RenderText_Solid(gFont, textureText, textColor);
+
+    if (textSurface == NULL) {
+        printf("Unable to render text surface! SDL_ttf Error: %s\n", TTF_GetError());
+    } else {
+        //Create texture from surface pixels
+        pd->mTexture = SDL_CreateTextureFromSurface(pd->gRenderer, textSurface);
+        if (pd->mTexture == NULL) {
+            printf("Unable to create texture from rendered text! SDL Error: %s\n", SDL_GetError());
+        } else {
+            //Get image dimensions
+            pd->mWidth = textSurface->w;
+            pd->mHeight = textSurface->h;
+        }
+
+        //Get rid of old surface
+        SDL_FreeSurface(textSurface);
+    }
+
+    //Return success
+    return pd->mTexture != NULL;
+
 }
