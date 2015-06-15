@@ -50,9 +50,10 @@ extern "C" {
         //Set alpha modulation
         void (*setAlpha)(LTexture *, Uint8);
 
+        
         //Creates image from font string bool
         bool (*loadFromRenderedText)(LTexture *, char *, TTF_Font *, SDL_Color);
-
+        
         void *privateData;
     };
 
