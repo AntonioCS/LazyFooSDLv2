@@ -10,10 +10,10 @@
 
 #include <SDL.h>
 #include <SDL_image.h>
-#include <SDL_ttf.h>
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
+#include "LTexture.class.h"
 
 
 #ifdef	__cplusplus
@@ -35,7 +35,7 @@ extern "C" {
         void *privateData;
     };
 
-    LButton *LButton_Init(void);
+    LButton *LButton_Init(LTexture *, SDL_Rect []);
 
     int LButton_TotalSpriteButtons(void);
 
