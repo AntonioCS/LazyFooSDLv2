@@ -18,7 +18,7 @@ struct privateData {
     enum LButtonSprite mCurrentSprite;
 
     LTexture *texture;
-    SLD_Rect *gSpriteClips;
+    SDL_Rect *gSpriteClips;
 };
 
 //Sets top left position
@@ -87,6 +87,10 @@ void setPosition(LButton *self, int x, int y) {
 void handleEvent(LButton *self, SDL_Event *e) {
     struct privateData *pd = self->privateData;
 
+    //@Todo Remove this as this should be passed and not be set here
+    const int BUTTON_WIDTH = 300;
+    const int BUTTON_HEIGHT = 200;
+
     //If mouse event happened
     if (e->type == SDL_MOUSEMOTION ||
             e->type == SDL_MOUSEBUTTONDOWN ||
@@ -148,9 +152,9 @@ void render(LButton *self) {
 
     //Show current button sprite
     pd->texture->render(
-        pd->texture,
-        pd->mPosition.x,
-        pd->mPosition.y,
-        pd->gSpriteClips[pd->mCurrentSprite]
-    );    
+            pd->texture,
+            pd->mPosition.x,
+            pd->mPosition.y,
+            &(pd->gSpriteClips[pd->mCurrentSprite])
+            );
 }
