@@ -87,3 +87,7 @@ lesson15: lessons/lesson15.c $(COMMON_SDLIMAGE_RENDERER) lessons/class/LTexture.
 #True Type Fonts
 lesson16: lessons/lesson16.c $(COMMON_SDLIMAGE_RENDERER) lessons/class/LTexture.class.c
 	$(CC) $+ $(CFLAGS) $(SDL_OPTIONS) $(SDL_OPTIONS_IMAGE) $(SDL_OPTIONS_TTF) -o bin/$@
+
+#Mouse Events
+lesson17: lessons/lesson17.c $(COMMON_SDLIMAGE_RENDERER) lessons/class/LTexture.class.c lessons/class/LButton.class.c
+	$(CC) $+ $(CFLAGS) $(SDL_OPTIONS) $(SDL_OPTIONS_IMAGE) $(SDL_OPTIONS_TTF) -o bin/$@
