@@ -91,3 +91,11 @@ lesson16: lessons/lesson16.c $(COMMON_SDLIMAGE_RENDERER) lessons/class/LTexture.
 #Mouse Events
 lesson17: lessons/lesson17.c $(COMMON_SDLIMAGE_RENDERER) lessons/class/LTexture.class.c lessons/class/LButton.class.c
 	$(CC) $+ $(CFLAGS) $(SDL_OPTIONS) $(SDL_OPTIONS_IMAGE) $(SDL_OPTIONS_TTF) -o bin/$@
+
+#Key States - This is basically lesson 04 with a different way of getting the keys.
+#In this one as soon as you stop pressing the key it goes back to the default image
+lesson18: lessons/lesson18.c $(COMMON)
+	$(CC) $+ $(CFLAGS) $(SDL_OPTIONS) -o bin/$@
+
+#lesson19 - I don't have a Joystick
+#lesson20 - Don't have a controller
