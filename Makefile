@@ -104,5 +104,5 @@ lesson18: lessons/lesson18.c $(COMMON)
 #lesson19 - I don't have a Joystick
 #lesson20 - Don't have a controller
 
-lesson21: lessons/lesson21.c $(COMMON_SDLIMAGE_RENDERER) lessons/class/LTexture.class.c lessons/class/LButton.class.c
+lesson21: lessons/lesson21.c $(COMMON_SDLIMAGE_RENDERER) lessons/common/init_audio.c lessons/class/LTexture.class.c lessons/class/LButton.class.c
 	$(CC) $+ $(CFLAGS) $(SDL_OPTIONS) $(SDL_OPTIONS_IMAGE) $(SDL_OPTIONS_TTF) $(SDL_OPTIONS_MIXER) -o bin/$@
