@@ -106,3 +106,6 @@ lesson18: lessons/lesson18.c $(COMMON)
 
 lesson21: lessons/lesson21.c $(COMMON_SDLIMAGE_RENDERER) lessons/common/init_audio.c lessons/class/LTexture.class.c lessons/class/LButton.class.c
 	$(CC) $+ $(CFLAGS) $(SDL_OPTIONS) $(SDL_OPTIONS_IMAGE) $(SDL_OPTIONS_TTF) $(SDL_OPTIONS_MIXER) -o bin/$@
+
+lesson22: lessons/lesson22.c $(COMMON_SDLIMAGE_RENDERER) lessons/class/LTexture.class.c
+	$(CC) $+ $(CFLAGS) $(SDL_OPTIONS) $(SDL_OPTIONS_IMAGE) $(SDL_OPTIONS_TTF) -o bin/$@
