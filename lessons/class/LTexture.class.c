@@ -132,14 +132,7 @@ static SDL_Rect *renderHandleRect(struct p_data *pd, int x, int y, SDL_Rect *cli
 
 void render(LTexture *lt, int x, int y, SDL_Rect *clip) {
     struct p_data *pd = lt->privateData;
-    /*
-        SDL_Rect renderQuad = {
-            .x = x,
-            .y = y,
-            .w = (clip != NULL ? clip->w : pd->mWidth),
-            .h = (clip != NULL ? clip->h : pd->mHeight)
-        };
-     */
+
     SDL_RenderCopy(pd->gRenderer, pd->mTexture, clip,
             renderHandleRect(pd, x, y, clip));
 }
@@ -169,24 +162,40 @@ void setColor(LTexture *lt, Uint8 red, Uint8 green, Uint8 blue) {
     SDL_SetTextureColorMod(pd->mTexture, red, green, blue);
 }
 
-//Set blending
 
+/**
+ * Set blending
+ *
+ * @param lt
+ * @param blending
+ */
 void setBlendMode(LTexture *lt, SDL_BlendMode blending) {
     struct p_data *pd = lt->privateData;
     //Set blending function
     SDL_SetTextureBlendMode(pd->mTexture, blending);
 }
 
-//Set alpha modulation
-
+/**
+ * Set alpha modulation
+ *
+ * @param lt
+ * @param alpha
+ */
 void setAlpha(LTexture *lt, Uint8 alpha) {
     struct p_data *pd = lt->privateData;
 
     SDL_SetTextureAlphaMod(pd->mTexture, alpha);
 }
 
-//Creates image from font string bool
-
+/**
+ * Creates image from font string bool
+ *
+ * @param lt
+ * @param textureText
+ * @param gFont
+ * @param textColor
+ * @return
+ */
 bool loadFromRenderedText(LTexture *lt, char *textureText, TTF_Font *gFont, SDL_Color textColor) {
     struct p_data *pd = lt->privateData;
 
@@ -214,6 +223,5 @@ bool loadFromRenderedText(LTexture *lt, char *textureText, TTF_Font *gFont, SDL_
     }
 
     //Return success
-    return pd->mTexture != NULL;
-
+    return (pd->mTexture != NULL);
 }
