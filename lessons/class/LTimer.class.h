@@ -15,9 +15,19 @@ extern "C" {
     typedef struct LTimer LTimer;
 
     struct LTimer {
+        
+        //The various clock actions
+        void (*start)(LTimer *);
+        void (*stop)(LTimer *);
+        void (*pause)(LTimer *);
+        void (*unpause)(LTimer *);
 
-        //Example function
-        //void (*function)(LTimer *);
+        //Gets the timer's time
+        Uint32 (*getTicks)(LTimer *);
+
+        //Checks the status of the timer
+        bool (*isStarted)(LTimer *);
+        bool (*isPaused)(LTimer *);
 
         //Private of struct
         void *privateData;
