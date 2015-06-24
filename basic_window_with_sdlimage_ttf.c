@@ -1,5 +1,6 @@
 #include <SDL.h>
 #include <SDL_image.h>
+#include <SDL_ttf.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -15,7 +16,8 @@ int main(int argc, char** argv) {
     SDL_Renderer *gRenderer = NULL;
     SDL_Window *gWindow = init_renderer(&gRenderer);
 
-    if (gWindow != NULL && init_sdlimage()) {
+    //Initialize TTF directly here (no external function)
+    if (gWindow != NULL && init_sdlimage() && TTF_Init() == 0) {
         bool quit = false;
 
         //Event handler
@@ -54,6 +56,7 @@ int main(int argc, char** argv) {
     gWindow = NULL;
 
     //Quit SDL subsystems
+    TTF_Quit();
     IMG_Quit();
     SDL_Quit();
 
