@@ -13,7 +13,7 @@ SDL_Window *init_renderer(SDL_Renderer **gRenderer) { //, struct renderer_RGBA *
 
         if (gWindow != NULL) {
             //Get window surface
-            *gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED);
+            *gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
             //printf("init: screen pointer values: %p\n", *screen);
         }
         else {
