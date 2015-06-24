@@ -1,0 +1,75 @@
+/* 
+ * File:   lesson25.c
+ * Author: antoniocs
+ *
+ * Created on 24 de Junho de 2015, 8:27
+ */
+
+#include <SDL.h>
+#include <SDL_image.h>
+#include <SDL_ttf.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include "common/init_renderer.h"
+#include "common/init_only_sdlimage.h"
+#include "common/resource_path.h"
+#include "class/LTexture.class.h"
+#include "class/LTimer.class.h"
+
+int main(int argc, char** argv) {
+    const int SCREEN_WIDTH = 640;
+    const int SCREEN_HEIGHT = 480;
+    const int SCREEN_FPS = 60;
+    const int SCREEN_TICK_PER_FRAME = 1000 / SCREEN_FPS;
+
+    SDL_Surface *image = NULL;
+    SDL_Renderer *gRenderer = NULL;
+    SDL_Window *gWindow = init_renderer(&gRenderer);
+
+    //Initialize TTF directly here (no external function)
+    if (gWindow != NULL && init_sdlimage() && TTF_Init() == 0) {
+        bool quit = false;
+
+        //Event handler
+        SDL_Event e;
+
+        //While application is running
+        while (!quit) {
+            //Handle events on queue
+            while (SDL_PollEvent(&e) != 0) {
+                //User requests quit ----------- Quit also with ESCAPE key pressed
+                if (e.type == SDL_QUIT || (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE)) {
+                    quit = true;
+                }
+            }
+
+            //Clear screen
+            SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+            SDL_RenderClear(gRenderer);
+
+            //Update screen
+            SDL_RenderPresent(gRenderer);
+
+            //So its not super cpu intensive
+            SDL_Delay(1);
+        }
+    } else {
+        printf("Something wrong with the window: %s\n", SDL_GetError());
+        exit(EXIT_FAILURE);
+    }
+
+    //Destroy window
+    SDL_DestroyRenderer(gRenderer);
+    gRenderer = NULL;
+    SDL_DestroyWindow(gWindow);
+    gWindow = NULL;
+
+    //Quit SDL subsystems
+    TTF_Quit();
+    IMG_Quit();
+    SDL_Quit();
+
+    exit(EXIT_SUCCESS);
+}
+
