@@ -81,7 +81,10 @@ int main(int argc, char** argv) {
 
                 //So its not super cpu intensive
                 //This delay has to be here otherwise the images are switched too fast
-                SDL_Delay(50);
+                //SDL_Delay(50);
+
+                //Using SDL_RENDERER_PRESENTVSYNC in the init function as I should have used the image
+                //doesn't go too fast so there is no need for a big delay
             }
 
             gSpriteSheetTexture->free(gSpriteSheetTexture);
