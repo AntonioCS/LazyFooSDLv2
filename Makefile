@@ -80,9 +80,9 @@ lesson12: lessons/lesson12.c $(COMMON_SDLIMAGE_RENDERER) lessons/class/LTexture.
 lesson13: lessons/lesson13.c $(COMMON_SDLIMAGE_RENDERER) lessons/class/LTexture.class.c
 	$(CC) $+ $(CFLAGS) $(SDL_OPTIONS) $(SDL_OPTIONS_IMAGE) -o bin/$@
 
-#Animated Sprites and Vsync
+#Animated Sprites and Vsync --- SDL_RENDERER_PRESENTVSYNC
 lesson14: lessons/lesson14.c $(COMMON_SDLIMAGE_RENDERER) lessons/class/LTexture.class.c
-	$(CC) $+ $(CFLAGS) $(SDL_OPTIONS) $(SDL_OPTIONS_IMAGE) -o bin/$@
+	$(CC) $+ $(CFLAGS) $(SDL_OPTIONS) $(SDL_OPTIONS_IMAGE) $(SDL_OPTIONS_TTF) -o bin/$@
 
 #Rotation and Flipping
 lesson15: lessons/lesson15.c $(COMMON_SDLIMAGE_RENDERER) lessons/class/LTexture.class.c
@@ -104,14 +104,22 @@ lesson18: lessons/lesson18.c $(COMMON)
 #lesson19 - I don't have a Joystick
 #lesson20 - Don't have a controller
 
+#Sound Effects and Music
 lesson21: lessons/lesson21.c $(COMMON_SDLIMAGE_RENDERER) lessons/common/init_audio.c lessons/class/LTexture.class.c lessons/class/LButton.class.c
 	$(CC) $+ $(CFLAGS) $(SDL_OPTIONS) $(SDL_OPTIONS_IMAGE) $(SDL_OPTIONS_TTF) $(SDL_OPTIONS_MIXER) -o bin/$@
 
+#Timing
 lesson22: lessons/lesson22.c $(COMMON_SDLIMAGE_RENDERER) lessons/class/LTexture.class.c
 	$(CC) $+ $(CFLAGS) $(SDL_OPTIONS) $(SDL_OPTIONS_IMAGE) $(SDL_OPTIONS_TTF) -o bin/$@
 
+#Advanced Timers
 lesson23: lessons/lesson23.c $(COMMON_SDLIMAGE_RENDERER) lessons/class/LTexture.class.c lessons/class/LTimer.class.c
 	$(CC) $+ $(CFLAGS) $(SDL_OPTIONS) $(SDL_OPTIONS_IMAGE) $(SDL_OPTIONS_TTF) -o bin/$@
 
+#Calculating Frame Rate
 lesson24: lessons/lesson24.c $(COMMON_SDLIMAGE_RENDERER) lessons/class/LTexture.class.c lessons/class/LTimer.class.c
+	$(CC) $+ $(CFLAGS) $(SDL_OPTIONS) $(SDL_OPTIONS_IMAGE) $(SDL_OPTIONS_TTF) -o bin/$@
+
+#Capping Frame Rate
+lesson25: lessons/lesson25.c $(COMMON_SDLIMAGE_RENDERER) lessons/class/LTexture.class.c lessons/class/LTimer.class.c
 	$(CC) $+ $(CFLAGS) $(SDL_OPTIONS) $(SDL_OPTIONS_IMAGE) $(SDL_OPTIONS_TTF) -o bin/$@
