@@ -22,7 +22,7 @@
 int main(int argc, char** argv) {
     const int SCREEN_WIDTH = 640;
     const int SCREEN_HEIGHT = 480;
-    
+
     SDL_Renderer *gRenderer = NULL;
     SDL_Window *gWindow = init_renderer(&gRenderer);
 
@@ -86,24 +86,29 @@ int main(int argc, char** argv) {
             SDL_RenderClear(gRenderer);
 
             gFPSTextTexture->render(gFPSTextTexture,
-                    (SCREEN_WIDTH - gFPSTextTexture->getWidth(gFPSTextTexture) ) / 2,
-                    (SCREEN_HEIGHT - gFPSTextTexture->getHeight(gFPSTextTexture) ) / 2,
+                    (SCREEN_WIDTH - gFPSTextTexture->getWidth(gFPSTextTexture)) / 2,
+                    (SCREEN_HEIGHT - gFPSTextTexture->getHeight(gFPSTextTexture)) / 2,
                     NULL);
 
             //Update screen
             SDL_RenderPresent(gRenderer);
 
             ++countedFrames;
-            //So its not super cpu intensive
-            SDL_Delay(1);
+
+            //If frame finished early
+            int frameTicks = capTimer.getTicks();
+            if (frameTicks < SCREEN_TICK_PER_FRAME) {
+                //Wait remaining time
+                SDL_Delay(SCREEN_TICK_PER_FRAME - frameTicks);
+            }
         }
     } else {
         printf("Something wrong with the window: %s\n", SDL_GetError());
         exit(EXIT_FAILURE);
     }
 
-    terminate:
-    
+terminate:
+
     //Destroy window
     SDL_DestroyRenderer(gRenderer);
     gRenderer = NULL;
