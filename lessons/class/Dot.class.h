@@ -1,5 +1,5 @@
-#ifndef CLASSNAME_CLASS_H
-#define	CLASSNAME_CLASS_H
+#ifndef DOT_CLASS_H
+#define	DOT_CLASS_H
 
 #include <SDL.h>
 #include <SDL_image.h>
@@ -12,22 +12,31 @@
 extern "C" {
 #endif
 
-    typedef struct CLASSNAME CLASSNAME;
+    typedef struct Dot Dot;
 
-    struct CLASSNAME {
-
+    struct Dot {
         //Example function
-        //void (*function)(CLASSNAME *);
+        //void (*function)(Dot *);
+
+        //Takes key presses and adjusts the dot's velocity
+        void (*handleEvent)(Dot *, SDL_Event *e);
+
+        //Moves the dot
+        void (*move)(Dot *);
+
+        //Shows the dot on the screen
+        void (*render)(Dot *);
+
 
         //Private of struct
         void *privateData;
     };
 
-    CLASSNAME *CLASSNAME_Init();   
+    Dot *Dot_Init();
 
 #ifdef	__cplusplus
 }
 #endif
 
-#endif	/* CLASSNAME_CLASS_H */
+#endif	/* Dot_CLASS_H */
 
