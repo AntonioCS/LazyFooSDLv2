@@ -127,3 +127,7 @@ lesson25: lessons/lesson25.c $(COMMON_SDLIMAGE_RENDERER) lessons/class/LTexture.
 #Motion
 lesson26: lessons/lesson26.c $(COMMON_SDLIMAGE_RENDERER) lessons/class/LTexture.class.c lessons/class/Dot.class.c
 	$(CC) $+ $(CFLAGS) $(SDL_OPTIONS) $(SDL_OPTIONS_IMAGE) $(SDL_OPTIONS_TTF) -o bin/$@
+
+#Collision Detection
+lesson27: lessons/lesson27.c $(COMMON_SDLIMAGE_RENDERER) lessons/class/LTexture.class.c lessons/class/Dot.class.c
+	$(CC) $+ $(CFLAGS) $(SDL_OPTIONS) $(SDL_OPTIONS_IMAGE) $(SDL_OPTIONS_TTF) -o bin/$@
