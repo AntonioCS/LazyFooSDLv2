@@ -24,7 +24,7 @@ extern "C" {
         //Moves the dot
         //void (*move)(Dot *);
         //Lesson 27 - Moves the dot and checks collision
-        void (*move)(Dot *, SDL_Rect *wall);
+        void (*move)(Dot *, SDL_Rect *);
 
         //Shows the dot on the screen
         void (*render)(Dot *);
