@@ -28,7 +28,7 @@ struct privateData {
 
     LTexture *gDotTexture;
 
-    //lesson 27 - Dot's collision box
+    //lesson 27 - Dots collision box
     SDL_Rect mCollider;
 };
 
@@ -40,6 +40,8 @@ static void hookFunctions(Dot *);
 // --------------- Setup function prototype END------------
 
 
+static bool checkCollision(SDL_Rect *, SDL_Rect *);
+
 // ------------------------------------------------------------------------
 // -------------------- Public methods prototypes -------------------------
 // ------------------------------------------------------------------------
@@ -47,7 +49,9 @@ static void hookFunctions(Dot *);
 //Takes key presses and adjusts the dot's velocity
 static void handleEvent(Dot *, SDL_Event *e);
 //Moves the dot
-static void move(Dot *);
+//static void move(Dot *);
+//lesson 27
+static void move(Dot *, SDL_Rect *);
 //Shows the dot on the screen
 static void render(Dot *);
 
@@ -95,6 +99,7 @@ bool initPrivateData(Dot *self, LTexture *gDotTexture) {
         pd->gDotTexture = gDotTexture;
 
         //Set collision box dimension
+        //lesson 27
         pd->mCollider.w = DOT_WIDTH;
         pd->mCollider.h = DOT_HEIGHT;
 
@@ -158,14 +163,18 @@ void handleEvent(Dot *self, SDL_Event *e) {
     }
 }
 
-void move(Dot *self) {
+//void move(Dot *self) {
+//lesson 27
+
+void move(Dot *self, SDL_Rect *wall) {
     create_pd(self);
 
     //Move the dot left or right
     pd->mPosX += pd->mVelX;
+    pd->mCollider.x = pd->mPosX;
 
     //If the dot went too far to the left or right
-    if ((pd->mPosX < 0) || (pd->mPosX + DOT_WIDTH > SCREEN_WIDTH)) {
+    if ((pd->mPosX < 0) || (pd->mPosX + DOT_WIDTH > SCREEN_WIDTH) || checkCollision(&(pd->mCollider), wall)) {
         //Move back
         pd->mPosX -= pd->mVelX;
     }
@@ -174,7 +183,7 @@ void move(Dot *self) {
     pd->mPosY += pd->mVelY;
 
     //If the dot went too far up or down
-    if ((pd->mPosY < 0) || (pd->mPosY + DOT_HEIGHT > SCREEN_HEIGHT)) {
+    if ((pd->mPosY < 0) || (pd->mPosY + DOT_HEIGHT > SCREEN_HEIGHT) || checkCollision(&(pd->mCollider), wall)) {
         //Move back
         pd->mPosY -= pd->mVelY;
     }
@@ -191,3 +200,35 @@ void render(Dot *self) {
 // ------------------------------------------------------------------------
 // -------------------- Public methods END --------------------------------
 // ------------------------------------------------------------------------
+
+bool checkCollision(SDL_Rect *a, SDL_Rect *b) {
+    //The sides of the rectangles
+    int leftA, leftB;
+    int rightA, rightB;
+    int topA, topB;
+    int bottomA, bottomB;
+
+    //Calculate the sides of rect A
+    leftA = a->x;
+    rightA = a->x + a->w;
+    topA = a->y;
+    bottomA = a->y + a->h;
+
+    //Calculate the sides of rect B
+    leftB = b->x;
+    rightB = b->x + b->w;
+    topB = b->y;
+    bottomB = b->y + b->h;
+
+    //If any of the sides from A are outside of B
+    if (bottomA <= topB ||
+            topA >= bottomB ||
+            rightA <= leftB ||
+            leftA >= rightB) {
+        return false;
+    }
+
+    //If none of the sides from A are outside B
+    return true;
+
+}
