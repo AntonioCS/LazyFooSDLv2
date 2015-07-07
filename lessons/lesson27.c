@@ -13,12 +13,10 @@
 #include "common/init_renderer.h"
 #include "common/init_only_sdlimage.h"
 #include "common/resource_path.h"
+#include "class/LTexture.class.h"
+#include "class/Dot.class.h"
 
 int main(int argc, char** argv) {
-    const int SCREEN_WIDTH = 640;
-    const int SCREEN_HEIGHT = 480;
-
-    SDL_Surface *image = NULL;
     SDL_Renderer *gRenderer = NULL;
     SDL_Window *gWindow = init_renderer(&gRenderer);
 
@@ -28,6 +26,24 @@ int main(int argc, char** argv) {
         //Event handler
         SDL_Event e;
 
+        //Scene textures
+        LTexture *gDotTexture = LTexture_Init(gRenderer);
+
+        //Load prompt texture
+        if (!gDotTexture->loadFromFile(gDotTexture, resource_path("images/dot.bmp"))) {
+            printf("Unable to load dot texture!\n");
+            goto terminate;
+        }
+
+        Dot *dot = Dot_Init(gDotTexture);
+
+        //Set the wall
+        SDL_Rect wall;
+        wall.x = 300;
+        wall.y = 40;
+        wall.w = 40;
+        wall.h = 400;
+
         //While application is running
         while (!quit) {
             //Handle events on queue
@@ -36,23 +52,32 @@ int main(int argc, char** argv) {
                 if (e.type == SDL_QUIT || (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE)) {
                     quit = true;
                 }
+                dot->handleEvent(dot, &e);
             }
 
+            dot->move(dot, &wall);
             //Clear screen
             SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
             SDL_RenderClear(gRenderer);
+
+            //Render wall
+            SDL_SetRenderDrawColor(gRenderer, 0x00, 0x00, 0x00, 0xFF);
+            SDL_RenderDrawRect(gRenderer, &wall);
+
+            //Render objects
+            dot->render(dot);
 
             //Update screen
             SDL_RenderPresent(gRenderer);
 
             //So its not super cpu intensive
-            SDL_Delay(1);
+            //SDL_Delay(1);
         }
-    }
-    else {
+    } else {
         printf("Something wrong with the window: %s\n", SDL_GetError());
         exit(EXIT_FAILURE);
     }
+terminate:
 
     //Destroy window
     SDL_DestroyRenderer(gRenderer);
