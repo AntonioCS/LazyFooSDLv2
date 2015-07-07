@@ -177,15 +177,18 @@ void move(Dot *self, SDL_Rect *wall) {
     if ((pd->mPosX < 0) || (pd->mPosX + DOT_WIDTH > SCREEN_WIDTH) || checkCollision(&(pd->mCollider), wall)) {
         //Move back
         pd->mPosX -= pd->mVelX;
+        pd->mCollider.x = pd->mPosX;
     }
 
     //Move the dot up or down
     pd->mPosY += pd->mVelY;
+    pd->mCollider.y = pd->mPosY;
 
     //If the dot went too far up or down
     if ((pd->mPosY < 0) || (pd->mPosY + DOT_HEIGHT > SCREEN_HEIGHT) || checkCollision(&(pd->mCollider), wall)) {
         //Move back
         pd->mPosY -= pd->mVelY;
+        pd->mCollider.y = pd->mPosY;
     }
 }
 
@@ -220,7 +223,7 @@ bool checkCollision(SDL_Rect *a, SDL_Rect *b) {
     topB = b->y;
     bottomB = b->y + b->h;
 
-    //If any of the sides from A are outside of B
+    //If any of the sides from A are outside of B    
     if (bottomA <= topB ||
             topA >= bottomB ||
             rightA <= leftB ||
