@@ -29,6 +29,10 @@ extern "C" {
         //Shows the dot on the screen
         void (*render)(Dot *);
 
+        //lesson 28
+        //Return the colliders (per pixel)
+        SDL_Rect (*getColliders)(Dot *);
+
 
         //Private of struct
         void *privateData;

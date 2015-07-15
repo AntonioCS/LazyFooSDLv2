@@ -11,6 +11,8 @@ static const int SCREEN_HEIGHT = 480;
 static const int DOT_WIDTH = 20;
 static const int DOT_HEIGHT = 20;
 
+static const int MCOLLLIDERPERPIXEL_SIZE = 11;
+
 /**
  * Private struct
  */
@@ -30,6 +32,9 @@ struct privateData {
 
     //lesson 27 - Dots collision box
     SDL_Rect mCollider;
+
+    //lesson 28 - Per pixel collision
+    SDL_Rect *mColliderPerPixel;
 };
 
 // --------------- Setup function prototype ---------------
@@ -39,8 +44,12 @@ static bool initPrivateData(Dot *, LTexture *);
 static void hookFunctions(Dot *);
 // --------------- Setup function prototype END------------
 
-
+//lesson 27
 static bool checkCollision(SDL_Rect *, SDL_Rect *);
+
+//lesson 28
+//Moves the collision boxes relative to the dot's offset
+static void shiftColliders(struct privateData *);
 
 // ------------------------------------------------------------------------
 // -------------------- Public methods prototypes -------------------------
@@ -54,6 +63,8 @@ static void handleEvent(Dot *, SDL_Event *e);
 static void move(Dot *, SDL_Rect *);
 //Shows the dot on the screen
 static void render(Dot *);
+
+static SDL_Rect *getColliders(Dot *);
 
 // ------------------------------------------------------------------------
 // -------------------- Public methods prototypes END ---------------------
@@ -102,6 +113,55 @@ bool initPrivateData(Dot *self, LTexture *gDotTexture) {
         //lesson 27
         pd->mCollider.w = DOT_WIDTH;
         pd->mCollider.h = DOT_HEIGHT;
+
+        //lesson 28
+        //Set up mColliderPerPixel
+        pd->mColliderPerPixel = calloc(MCOLLLIDERPERPIXEL_SIZE, sizeof (SDL_Rect));
+
+        if (pd->mColliderPerPixel == NULL) {
+            printf("Unable to allocate space for mColliderPerPixel\n");
+            exit(-1);
+        }
+
+        pd->mColliderPerPixel[ 0 ].w = 6;
+        pd->mColliderPerPixel[ 0 ].h = 1;
+
+        pd->mColliderPerPixel[ 1 ].w = 10;
+        pd->mColliderPerPixel[ 1 ].h = 1;
+
+        pd->mColliderPerPixel[ 2 ].w = 14;
+        pd->mColliderPerPixel[ 2 ].h = 1;
+
+        pd->mColliderPerPixel[ 3 ].w = 16;
+        pd->mColliderPerPixel[ 3 ].h = 2;
+
+        pd->mColliderPerPixel[ 4 ].w = 18;
+        pd->mColliderPerPixel[ 4 ].h = 2;
+
+        pd->mColliderPerPixel[ 5 ].w = 20;
+        pd->mColliderPerPixel[ 5 ].h = 6;
+
+        pd->mColliderPerPixel[ 6 ].w = 18;
+        pd->mColliderPerPixel[ 6 ].h = 2;
+
+        pd->mColliderPerPixel[ 7 ].w = 16;
+        pd->mColliderPerPixel[ 7 ].h = 2;
+
+        pd->mColliderPerPixel[ 8 ].w = 14;
+        pd->mColliderPerPixel[ 8 ].h = 1;
+
+        pd->mColliderPerPixel[ 9 ].w = 10;
+        pd->mColliderPerPixel[ 9 ].h = 1;
+
+        pd->mColliderPerPixel[ 10 ].w = 6;
+        pd->mColliderPerPixel[ 10 ].h = 1;
+
+        /*
+        for(int i = 0; i < MCOLLLIDERPERPIXEL_SIZE; i++) {
+            printf("W - %d: %d\n", i, pd->mColliderPerPixel[i].w);
+            printf("H - %d: %d\n", i, pd->mColliderPerPixel[i].h);
+        }
+        //*/
 
         self->privateData = pd;
     }
@@ -171,7 +231,9 @@ void move(Dot *self, SDL_Rect *wall) {
 
     //Move the dot left or right
     pd->mPosX += pd->mVelX;
-    pd->mCollider.x = pd->mPosX;
+    //lesson 27
+    //pd->mCollider.x = pd->mPosX;
+
 
     //If the dot went too far to the left or right
     if ((pd->mPosX < 0) || (pd->mPosX + DOT_WIDTH > SCREEN_WIDTH) || checkCollision(&(pd->mCollider), wall)) {
@@ -234,4 +296,27 @@ bool checkCollision(SDL_Rect *a, SDL_Rect *b) {
     //If none of the sides from A are outside B
     return true;
 
+}
+
+void shiftColliders(struct privateData *pd) {
+    //The row offset
+    int r = 0;
+
+    //Go through the dot's collision boxes
+    for (int set = 0; set < MCOLLLIDERPERPIXEL_SIZE; ++set) {
+        //Center the collision box
+        pd->mColliderPerPixel[ set ].x = pd->mPosX + (DOT_WIDTH - pd->mColliderPerPixel[ set ].w) / 2;
+
+        //Set the collision box at its row offset
+        pd->mColliderPerPixel[ set ].y = pd->mPosY + r;
+
+        //Move the row offset down the height of the collision box
+        r += pd->mColliderPerPixel[ set ].h;
+    }
+}
+
+SDL_Rect *getColliders(Dot *self) {
+    create_pd(self);
+
+    return pd->mColliderPerPixel;
 }
